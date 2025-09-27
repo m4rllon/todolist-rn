@@ -128,7 +128,7 @@ export function AddTodoModal({todo, handleCloseModal}:AddTodoModalProps){
         <SubmitButton
         onPress={handleSubmit(handleSubmitForm)}>
             <TextSubmitButton>
-                Adicionar
+                {todo ? 'Salvar' : 'Adicionar'}
             </TextSubmitButton>
         </SubmitButton>
     </Container>

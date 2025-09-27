@@ -13,7 +13,6 @@ import { Modal, TouchableOpacity } from "react-native";
 import { getPriorityIconName } from "../../utils/getPriorityIconName";
 import { useTodos } from "../../hooks/useTodos";
 import { AddTodoModal } from "../AddTodoModal";
-import { useModal } from "../../hooks/useModal";
 
 interface TodoProps{
     id: string;
@@ -24,7 +23,7 @@ interface TodoProps{
 }
 
 export function Todo({id, description, status, date, priority}:TodoProps){
-    const {statusModal, handleCloseModal, handleOpenModal} = useModal()
+    const [statusModal, setStatusModal] = useState(false)
     const { deleteTodo, updateTodo } = useTodos()
     const [todoStatus, setTodoStatus] = useState(status)
 
@@ -47,6 +46,13 @@ export function Todo({id, description, status, date, priority}:TodoProps){
 
     const handleDeleteTask = () => {
         deleteTodo(id)
+    }
+
+    const handleOpenModal = () => {
+            setStatusModal(true)
+    }
+    const handleCloseModal = () => {
+        setStatusModal(false)
     }
 
     return <Container>
