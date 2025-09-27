@@ -22,7 +22,7 @@ interface TodoProps{
 }
 
 export function Todo({id, description, status, date, priority}:TodoProps){
-    const { deleteTodo } = useTodos()
+    const { deleteTodo, updateTodo } = useTodos()
     const [todoStatus, setTodoStatus] = useState(status)
     const currentTodoDate = new Intl.DateTimeFormat('pt-Br', {
             weekday: 'long',
@@ -30,8 +30,15 @@ export function Todo({id, description, status, date, priority}:TodoProps){
             day:'2-digit',
         }).format(date)
 
-    const handleChangeTodoStatus = () => {
-        setTodoStatus( prev => !prev)
+    const handleChangeTodoStatus = (newStatus: boolean) => {
+        setTodoStatus(newStatus)
+        updateTodo({
+            id:id,
+            description: description,
+            status: newStatus,
+            date: date, 
+            priority: priority
+        })
     }
 
     const handleDeleteTask = () => {
@@ -40,7 +47,7 @@ export function Todo({id, description, status, date, priority}:TodoProps){
 
     return <Container>
         <InfosContainer>
-            <TouchableOpacity onPress={handleChangeTodoStatus}>
+            <TouchableOpacity onPress={() => handleChangeTodoStatus(!todoStatus)}>
                 <CheckboxIcon
                 name={todoStatus ? "checkbox-marked" : "checkbox-blank-outline"}/>
             </TouchableOpacity>

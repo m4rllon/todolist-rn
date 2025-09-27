@@ -21,6 +21,7 @@ export interface TodoContextType {
     setTodos: React.Dispatch<React.SetStateAction<TTodo[]>>;
     addTodo: (newTodo:TNewTodo) => void;
     deleteTodo: (todoId:string) => void;
+    updateTodo: (newTodo:TTodo) => void
 }
 
 interface TodoProviderProps {
@@ -45,7 +46,19 @@ export const TodoProvider = ({ children } : TodoProviderProps) => {
         setTodos(newListTodos)
     }
 
-    return <TodoContext.Provider value={ {todos, setTodos, addTodo, deleteTodo} }>
+    const updateTodo = (newTodo: TTodo) => {
+        const newListTodos = todos.map(
+            todo => {
+                if(todo.id === newTodo.id){
+                    return newTodo
+                } else return todo
+            }
+        )
+
+        setTodos(newListTodos)
+    }
+
+    return <TodoContext.Provider value={ {todos, setTodos, addTodo, deleteTodo, updateTodo } }>
         {children}
     </TodoContext.Provider>
 }
