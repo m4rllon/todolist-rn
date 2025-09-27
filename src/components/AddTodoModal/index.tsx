@@ -68,7 +68,6 @@ export function AddTodoModal({handleCloseModal}:AddTodoModalProps){
     })
 
     const handleSubmitForm = (data:FormData) => {
-        console.log(data)
         addTodo(data)
     }
 

@@ -30,6 +30,7 @@ export function TodosList({title, date, data}:TodosListProps){
         data={data}
         keyExtractor={(item) => String(item.id)}
         renderItem={({item}) => <Todo
+        id={item.id}
         description={item.description}
         date={item.date}
         status={item.status}

@@ -20,6 +20,7 @@ export interface TodoContextType {
     todos: TTodo[];
     setTodos: React.Dispatch<React.SetStateAction<TTodo[]>>;
     addTodo: (newTodo:TNewTodo) => void;
+    deleteTodo: (todoId:string) => void;
 }
 
 interface TodoProviderProps {
@@ -39,7 +40,12 @@ export const TodoProvider = ({ children } : TodoProviderProps) => {
         setTodos(prev => [...prev, newTodoFormatted])
     }
 
-    return <TodoContext.Provider value={ {todos, setTodos, addTodo} }>
+    const deleteTodo = (todoId:string) => {
+        const newListTodos = todos.filter(todo => todoId != todo.id)
+        setTodos(newListTodos)
+    }
+
+    return <TodoContext.Provider value={ {todos, setTodos, addTodo, deleteTodo} }>
         {children}
     </TodoContext.Provider>
 }

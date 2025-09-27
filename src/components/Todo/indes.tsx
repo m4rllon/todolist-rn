@@ -11,15 +11,18 @@ import {
     TrashIcon} from "./styles";
 import { TouchableOpacity } from "react-native";
 import { getPriorityIconName } from "../../utils/getPriorityIconName";
+import { useTodos } from "../../hooks/useTodos";
 
 interface TodoProps{
+    id: string;
     description: string;
     status: boolean; 
     date: Date;
     priority: string;
 }
 
-export function Todo({description, status, date, priority}:TodoProps){
+export function Todo({id, description, status, date, priority}:TodoProps){
+    const { deleteTodo } = useTodos()
     const [todoStatus, setTodoStatus] = useState(status)
     const currentTodoDate = new Intl.DateTimeFormat('pt-Br', {
             weekday: 'long',
@@ -32,7 +35,7 @@ export function Todo({description, status, date, priority}:TodoProps){
     }
 
     const handleDeleteTask = () => {
-
+        deleteTodo(id)
     }
 
     return <Container>
