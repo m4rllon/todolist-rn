@@ -9,9 +9,10 @@ import {
     PriorityIcon, 
     OptionsContainer,
     TrashIcon} from "./styles";
-import { TouchableOpacity } from "react-native";
+import { Modal, TouchableOpacity } from "react-native";
 import { getPriorityIconName } from "../../utils/getPriorityIconName";
 import { useTodos } from "../../hooks/useTodos";
+import { AddTodoModal } from "../AddTodoModal";
 
 interface TodoProps{
     id: string;
@@ -24,6 +25,8 @@ interface TodoProps{
 export function Todo({id, description, status, date, priority}:TodoProps){
     const { deleteTodo, updateTodo } = useTodos()
     const [todoStatus, setTodoStatus] = useState(status)
+    const [statusModal, setStatusModal] = useState(false)
+
     const currentTodoDate = new Intl.DateTimeFormat('pt-Br', {
             weekday: 'long',
             month: 'short',
@@ -43,6 +46,13 @@ export function Todo({id, description, status, date, priority}:TodoProps){
 
     const handleDeleteTask = () => {
         deleteTodo(id)
+    }
+
+    const handleOpenModal = () => {
+        setStatusModal(true)
+    }
+    const handleCloseModal = () => {
+        setStatusModal(false)
     }
 
     return <Container>
@@ -73,10 +83,25 @@ export function Todo({id, description, status, date, priority}:TodoProps){
                 <TrashIcon
                 name="trash-can"/>
             </TouchableOpacity>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={handleOpenModal}>
                 <TrashIcon
                 name="pencil"/>
             </TouchableOpacity>
         </OptionsContainer>
+
+        <Modal
+        animationType="slide"
+        transparent={true}
+        visible={statusModal}>
+            <AddTodoModal
+            todo={{
+                id:id,
+                description: description,
+                status: todoStatus,
+                priority: priority,
+                date: date
+            }}
+            handleCloseModal={handleCloseModal}/>
+        </Modal>
     </Container>
 }

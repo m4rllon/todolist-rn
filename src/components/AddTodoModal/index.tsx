@@ -15,10 +15,12 @@ import { useForm } from "react-hook-form";
 import { DateInputForm } from "../Forms/DateInputForm";
 import { PriorityInputForm } from "../Forms/PriorityInputForm";
 import { useTodos } from "../../hooks/useTodos";
+import { Ttodos } from "../../interfaces/Ttodos";
 
 
 interface AddTodoModalProps{
     handleCloseModal: () => void;
+    todo?: Ttodos;
 }
 
 interface FormData {
@@ -51,29 +53,51 @@ const priorityOptions = [
     },
 ]
 
-export function AddTodoModal({handleCloseModal}:AddTodoModalProps){
-    const { addTodo } = useTodos();
+export function AddTodoModal({todo, handleCloseModal}:AddTodoModalProps){
+    const { addTodo, updateTodo } = useTodos();
+    let defaultValues
+    if(todo){
+        defaultValues = {
+            description: todo.description,
+            date: new Date(todo.date),
+            priority: todo.priority,
+            status: todo.status,
+        }
+    } else {
+        defaultValues = {
+            description: '',
+            date: new Date(),
+            priority: '',
+            status: false,
+        }
+    }
+
     const {
         control,
         handleSubmit,
         formState : {errors}
     } = useForm<FormData>({
         resolver: yupResolver(schema),
-        defaultValues: {
-            description: '',
-            date: new Date(),
-            priority: '',
-            status: false,
-        }
+        defaultValues: defaultValues
     })
 
     const handleSubmitForm = (data:FormData) => {
-        addTodo(data)
+        if(todo){
+            updateTodo({
+                id: todo.id,
+                ...data
+            })
+            handleCloseModal()
+        } else {
+            addTodo(data)
+        }
     }
 
     return <Container>
         <Header>
-            <Title>Adicionar tarefa</Title>
+            <Title>
+                {todo ? 'Editar tarefa' : 'Adicionar tarefa'}
+            </Title>
             <TouchableOpacity onPress={handleCloseModal}>
                 <CloseIcon
                 name="window-close"/>
