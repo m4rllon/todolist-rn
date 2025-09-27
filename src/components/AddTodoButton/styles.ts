@@ -6,7 +6,7 @@ export const Container = styled.TouchableOpacity`
     align-items: center;
 
     position: absolute;
-    top: 80%;
+    top: 90%;
     right: 32px;
 `
 

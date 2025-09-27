@@ -17,7 +17,6 @@ import { PriorityInputForm } from "../Forms/PriorityInputForm";
 import { useTodos } from "../../hooks/useTodos";
 import { Ttodos } from "../../interfaces/Ttodos";
 
-
 interface AddTodoModalProps{
     handleCloseModal: () => void;
     todo?: Ttodos;

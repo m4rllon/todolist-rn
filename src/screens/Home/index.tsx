@@ -5,20 +5,13 @@ import { AddTodoButton } from "../../components/AddTodoButton";
 import { Modal } from "react-native";
 import { AddTodoModal } from "../../components/AddTodoModal";
 import { useTodos } from "../../hooks/useTodos";
+import { useModal } from "../../hooks/useModal";
 
 export function Home(){
-    const {todos} = useTodos()
-
+    const { todos } = useTodos()
+    const { statusModal, handleCloseModal, handleOpenModal } = useModal()
     const [completedTodos, setCompletedTodos] = useState(todos.filter(props => props.status))
     const [todoTasks, setTodoTasks] = useState(todos.filter(props => !props.status))
-    const [statusModal, setStatusModal] = useState(false)
-
-    const handleOpenModal = () => {
-        setStatusModal(true)
-    }
-    const handleCloseModal = () => {
-        setStatusModal(false)
-    }
 
     useEffect(() => {
         setCompletedTodos(todos.filter(props => props.status))

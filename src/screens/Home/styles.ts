@@ -7,7 +7,8 @@ interface StylesProps {
 export const Container = styled.View<StylesProps>`
     width: 100%;
     flex: 1;
-    justify-content: center;
+    padding-top: 20%;
+    justify-content: start;
     align-items: center;
 
     background-color: ${({theme}) => theme.colors.background_primary};
