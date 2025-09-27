@@ -37,7 +37,7 @@ export const Container = styled.View`
 
 export const InfosContainer = styled.View`
     flex-direction: row;
-    justify-content: center;
+    justify-content: start;
     align-items: start;
     gap: 8px;
 `

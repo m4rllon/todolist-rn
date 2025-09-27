@@ -56,20 +56,26 @@ export function Todo({id, description, status, date, priority}:TodoProps){
                 $todoStatus={todoStatus}>
                     {description}
                 </Title>
-                <Subtext 
-                $todoStatus={todoStatus}>
-                    {String(currentTodoDate)}
-                </Subtext>
+                <InfosContainer>
+                    <Subtext 
+                    $todoStatus={todoStatus}>
+                        {String(currentTodoDate)}
+                    </Subtext>
+                    <PriorityIcon
+                    $todoPriority={priority}
+                    name={getPriorityIconName(priority)}/>
+                </InfosContainer>
             </TextContainer>
         </InfosContainer>
 
         <OptionsContainer>
-            <PriorityIcon
-            $todoPriority={priority}
-            name={getPriorityIconName(priority)}/>
             <TouchableOpacity onPress={handleDeleteTask}>
                 <TrashIcon
                 name="trash-can"/>
+            </TouchableOpacity>
+            <TouchableOpacity>
+                <TrashIcon
+                name="pencil"/>
             </TouchableOpacity>
         </OptionsContainer>
     </Container>

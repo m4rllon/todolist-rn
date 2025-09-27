@@ -23,7 +23,6 @@ export function Home(){
     useEffect(() => {
         setCompletedTodos(todos.filter(props => props.status))
         setTodoTasks(todos.filter(props => !props.status))
-        console.log(todos)
     }, [todos])
     
     return <Container
